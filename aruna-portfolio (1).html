@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aruna — Boarding Now</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3ead8;--card:#fbf5e8;--ink:#1f2a28;--red:#d6432b;--gold:#e3a72f;--line:rgba(31,42,40,.25);
+--disp:'Big Shoulders Display','Arial Narrow',Impact,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+--ease:cubic-bezier(.2,.8,.2,1);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#182120;--card:#212c2a;--ink:#f1e8d4;--line:rgba(241,232,212,.25);color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#182120;--card:#212c2a;--ink:#f1e8d4;--line:rgba(241,232,212,.25);color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:15px;line-height:1.65;overflow-x:hidden}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.65}
+h1,h2,h3{font-family:var(--disp);text-transform:uppercase;line-height:.88;margin:0}
+h2{font-size:clamp(44px,9vw,84px);font-weight:900}
+section{padding:72px 0;position:relative}
+.perf{border:0;border-top:2px dashed var(--line);margin:0}
+
+/* intro */
+#intro{position:fixed;inset:0;z-index:50;background:var(--ink);display:grid;place-items:center;transition:transform .7s var(--ease)}
+#intro.gone{transform:translateY(-100%)}
+.pass{width:min(86vw,340px);background:var(--card);color:#1f2a28;padding:18px;border-radius:6px;position:relative;transform:translateY(120vh) rotate(-6deg);animation:slide .8s var(--ease) .1s forwards}
+.pass .row{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.pass b{display:block;font:900 54px/.9 var(--disp);margin:10px 0 6px}
+.pass::after{content:"";position:absolute;left:-7px;right:-7px;bottom:46px;border-top:2px dashed rgba(31,42,40,.3)}
+.pass .bar{height:26px;margin-top:40px;background:repeating-linear-gradient(90deg,#1f2a28 0 2px,transparent 2px 4px,#1f2a28 4px 5px,transparent 5px 9px)}
+.stamp-in{position:absolute;right:14px;top:62px;font:900 30px var(--disp);color:var(--red);border:3px solid var(--red);padding:2px 10px;transform:rotate(-12deg) scale(2.2);opacity:0;animation:stamp .35s var(--ease) 1.0s forwards}
+#skip{position:absolute;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));background:none;border:1.5px solid var(--paper);color:var(--paper);font:inherit;font-size:12px;letter-spacing:.14em;padding:8px 14px;cursor:pointer;text-transform:uppercase}
+@keyframes slide{to{transform:none}}
+@keyframes stamp{to{opacity:1;transform:rotate(-12deg) scale(1)}}
+
+/* hero */
+.hero{min-height:100svh;padding-top:28px;display:flex;flex-direction:column;justify-content:space-between}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.mono{width:84px;height:84px;flex:none}
+.name{font-size:clamp(96px,30vw,300px);font-weight:900;letter-spacing:-.01em;margin:6vh 0 0 -.03em;position:relative;display:inline-block}
+.name svg{position:absolute;left:0;bottom:-.04em;width:100%;height:.2em;overflow:visible}
+.scrawl{fill:none;stroke:var(--red);stroke-width:7;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.go .scrawl{animation:draw 1.3s var(--ease) .15s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.tag{font-family:var(--disp);font-weight:700;font-size:clamp(26px,5vw,44px);line-height:1;text-transform:uppercase;max-width:15em;margin:34px 0 14px}
+.now{display:inline-flex;gap:10px;align-items:center;font-size:13px;border:1.5px solid var(--ink);padding:6px 12px}
+.now i{width:9px;height:9px;background:var(--red);border-radius:50%;animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.2}}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0 30px}
+.btn{font:500 14px var(--mono);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:14px 22px;border:2px solid var(--ink);transition:transform .25s var(--ease),background .25s}
+.btn.fill{background:var(--ink);color:var(--paper)}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:3px 3px 0 var(--red)}
+
+/* tickets */
+.ticket{background:var(--card);border:2px solid var(--ink);padding:22px;position:relative;transform-style:preserve-3d;transition:transform .25s var(--ease)}
+.ticket::before,.ticket::after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);top:50%;margin-top:-9px}
+.ticket::before{left:-10px;clip-path:inset(0 0 0 50%)}
+.ticket::after{right:-10px;clip-path:inset(0 50% 0 0)}
+.grid{display:grid;gap:22px;margin-top:34px}
+.about{display:grid;gap:28px;margin-top:30px}
+.about p{margin:0 0 16px;max-width:36em}
+.about p:first-child::first-letter{font:900 64px/.8 var(--disp);float:left;padding:6px 8px 0 0;color:var(--red)}
+.seat{font:900 120px/.8 var(--disp);color:var(--gold);-webkit-text-stroke:2px var(--ink)}
+.gate{font:900 40px var(--disp);color:var(--red);line-height:1}
+.lvl{display:inline-block;margin-top:10px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;background:var(--ink);color:var(--paper)}
+.lvl.l{background:none;color:var(--ink);border:1.5px dashed var(--ink)}
+.lvl.g{background:var(--gold);color:#1f2a28}
+.ticket h3{font-size:34px;margin:6px 0 8px}
+.ticket p{margin:0}
+.dest{border-color:var(--red)}
+.stamps{display:grid;grid-template-columns:repeat(2,1fr);gap:22px 14px;margin-top:34px}
+.st{border:3px double var(--c,var(--red));color:var(--c,var(--red));border-radius:50%;aspect-ratio:1;display:grid;place-content:center;text-align:center;padding:14px;transform:rotate(var(--r));transition:transform .4s var(--ease)}
+.st:hover{transform:rotate(0) scale(1.05)}
+.st b{font:900 28px/.95 var(--disp);text-transform:uppercase}
+.st span{font-size:12px;margin-top:6px;color:var(--ink)}
+.contact a.row{display:flex;justify-content:space-between;gap:12px;padding:16px 0;border-bottom:2px dashed var(--line);text-decoration:none;font-size:16px;transition:padding .3s var(--ease),color .3s}
+.contact a.row:hover{padding-left:12px;color:var(--red)}
+.contact h2{margin-bottom:24px}
+footer{padding:30px 0 50px;font-size:12px;opacity:.7}
+#egg{cursor:pointer;display:inline-block}
+#toast{position:fixed;left:50%;top:50%;z-index:40;font:900 clamp(36px,12vw,90px)/.9 var(--disp);text-transform:uppercase;text-align:center;color:var(--red);border:6px solid var(--red);background:var(--paper);padding:16px 26px;transform:translate(-50%,-50%) rotate(-8deg) scale(0);transition:transform .45s var(--ease);pointer-events:none}
+#toast.on{transform:translate(-50%,-50%) rotate(-8deg) scale(1)}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+@media(min-width:760px){
+ .wrap{padding:0 40px}
+ .about{grid-template-columns:2fr 1fr;align-items:start}
+ .grid.three{grid-template-columns:repeat(3,1fr)}
+ .grid.two{grid-template-columns:1fr 1fr}
+ .grid .ticket:nth-child(2){margin-top:34px}
+ .stamps{grid-template-columns:repeat(4,1fr)}
+ .st:nth-child(even){margin-top:30px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+ html{scroll-behavior:auto}.rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div id="intro" role="dialog" aria-label="Opening animation">
+ <div class="pass">
+  <div class="row"><span>Boarding pass</span><span>Seat 1A</span></div>
+  <b>ARUNA</b>
+  <div class="row"><span>Portfolio</span><span>Gate 01</span></div>
+  <div class="stamp-in">BOARDING</div>
+  <div class="bar"></div>
+ </div>
+ <button id="skip">Skip</button>
+</div>
+
+<header class="wrap hero" id="top">
+ <div>
+  <div class="top">
+   <span class="label">Boarding pass · Portfolio 2026</span>
+   <svg class="mono" viewBox="0 0 100 100" role="img" aria-label="Monogram A.">
+    <circle cx="50" cy="50" r="45" fill="none" stroke="#d6432b" stroke-width="3"/>
+    <circle cx="50" cy="50" r="39" fill="none" stroke="#d6432b" stroke-width="1.2"/>
+    <text x="50" y="66" text-anchor="middle" font-family="Big Shoulders Display,Impact,sans-serif" font-weight="900" font-size="54" fill="#d6432b">A</text>
+    <text x="50" y="82" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" letter-spacing="2" fill="#d6432b">B.TECH IT</text>
+   </svg>
+  </div>
+  <h1 class="name" id="name">Aruna
+   <svg viewBox="0 0 400 24" preserveAspectRatio="none" aria-hidden="true"><path class="scrawl" pathLength="1" vector-effect="non-scaling-stroke" d="M4 14 C60 4 110 20 170 11 S290 6 340 15 S388 10 396 8"/></svg>
+  </h1>
+  <p class="tag">First-year IT student, learning to build things that feel made by a person.</p>
+  <span class="now"><i></i> currently: building my first real website (this one)</span>
+ </div>
+ <div class="btns">
+  <a class="btn fill" href="#about">Explore</a>
+  <a class="btn" href="#contact">Say hi</a>
+ </div>
+</header>
+
+<hr class="perf">
+
+<section id="about" class="wrap">
+ <div class="label">Gate 01 · About</div>
+ <h2>Where I'm<br>flying from</h2>
+ <div class="about rv">
+  <div>
+   <p>I'm Aruna, a first-year B.Tech IT student in Chennai. I started the course not quite sure what "IT" would turn out to mean, and I'm slowly finding out that I like the moment when something I typed actually works on screen.</p>
+   <p>I learn best by making small, slightly messy things and then fixing them. [Add the real reason you chose IT here.]</p>
+   <p>This site is my first proper trip. It's a boarding pass because that's how the year feels: I've got a ticket, I'm at the gate, and I don't know every stop yet.</p>
+  </div>
+  <div class="ticket" data-tilt><div class="label">Passenger</div><div class="seat">1A</div><p>Window seat. Always.</p></div>
+ </div>
+</section>
+
+<hr class="perf">
+
+<section id="skills" class="wrap">
+ <div class="label">Gate 02 · Skills</div>
+ <h2>What's in<br>my carry-on</h2>
+ <div class="grid three">
+  <div class="ticket rv" data-tilt><div class="gate">A1</div><h3>HTML &amp; CSS</h3><p>I can build a page from scratch and make it behave on a phone.</p><span class="lvl">Comfortable</span></div>
+  <div class="ticket rv" data-tilt><div class="gate">A2</div><h3>JavaScript</h3><p>I understand the basics and still look things up often.</p><span class="lvl g">Getting there</span></div>
+  <div class="ticket rv" data-tilt><div class="gate">B1</div><h3>Python</h3><p>Used it for college exercises. Loops and functions feel fine.</p><span class="lvl g">Getting there</span></div>
+  <div class="ticket rv" data-tilt><div class="gate">B2</div><h3>Git &amp; GitHub</h3><p>I can commit and push. Branches still make me nervous.</p><span class="lvl l">Learning</span></div>
+  <div class="ticket rv" data-tilt><div class="gate">C1</div><h3>Data structures</h3><p>Arrays and stacks click. Trees are next on my list.</p><span class="lvl l">Learning</span></div>
+ </div>
+</section>
+
+<hr class="perf">
+
+<section id="journey" class="wrap">
+ <div class="label">Gate 03 · Journey</div>
+ <h2>Flight<br>log</h2>
+ <div class="grid three">
+  <div class="ticket rv" data-tilt><div class="label">Departed</div><h3>Made</h3><p>A few college mini-projects, and this portfolio. [Add one project name and a line about it.]</p></div>
+  <div class="ticket rv" data-tilt><div class="label">In flight</div><h3>Learning</h3><p>JavaScript properly, data structures, and how to read other people's code without panicking.</p></div>
+  <div class="ticket dest rv" data-tilt><div class="label" style="color:var(--red)">Destination</div><h3>Want to build</h3><p>A useful app for students on my campus. [Replace with your own dream project.]</p></div>
+ </div>
+</section>
+
+<hr class="perf">
+
+<section id="beyond" class="wrap">
+ <div class="label">Gate 04 · Beyond code</div>
+ <h2>Passport<br>stamps</h2>
+ <div class="stamps">
+  <div class="st rv" style="--r:-6deg"><b>Music</b><span>[your fave genre]</span></div>
+  <div class="st rv" style="--r:5deg;--c:var(--ink)"><b>Sketching</b><span>[what you draw]</span></div>
+  <div class="st rv" style="--r:-3deg;--c:var(--gold)"><b>Chai</b><span>[your order]</span></div>
+  <div class="st rv" style="--r:7deg"><b>Fun fact</b><span>[one true weird fact]</span></div>
+ </div>
+</section>
+
+<hr class="perf">
+
+<section id="contact" class="wrap contact">
+ <div class="label">Gate 05 · Check-in</div>
+ <h2>Say hi at<br>the desk</h2>
+ <div class="rv">
+  <a class="row" href="mailto:your.email@example.com"><span>Email</span><span>your.email@example.com</span></a>
+  <a class="row" href="https://www.linkedin.com/in/your-handle" target="_blank" rel="noopener"><span>LinkedIn</span><span>/in/your-handle</span></a>
+  <a class="row" href="https://github.com/your-handle" target="_blank" rel="noopener"><span>GitHub</span><span>/your-handle</span></a>
+ </div>
+</section>
+
+<footer class="wrap">Made by Aruna, by hand. Safe travels. <span id="egg" title="Gate 13?" role="button" tabindex="0">✈︎</span></footer>
+<div id="toast" aria-live="polite">Upgraded to business class</div>
+
+<script>
+(function(){
+ var intro=document.getElementById('intro'),body=document.body,done=false;
+ function end(){if(done)return;done=true;intro.classList.add('gone');setTimeout(function(){intro.style.display='none'},750);document.getElementById('top').classList.add('go')}
+ document.getElementById('skip').addEventListener('click',end);
+ setTimeout(end,2100);
+
+ // reveal on scroll
+ var rv=document.querySelectorAll('.rv');
+ if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+  rv.forEach(function(el,i){el.style.transitionDelay=(i%3)*90+'ms';io.observe(el)});
+ }else rv.forEach(function(el){el.classList.add('in')});
+
+ // tilt cards (signature: cards tilt toward your finger)
+ var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ if(!reduce)document.querySelectorAll('[data-tilt]').forEach(function(c){
+  function mv(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+   c.style.transform='perspective(700px) rotateY('+(x*12)+'deg) rotateX('+(-y*12)+'deg)'}
+  function lv(){c.style.transform=''}
+  c.addEventListener('pointermove',mv);c.addEventListener('pointerleave',lv);c.addEventListener('pointercancel',lv);
+ });
+
+ // easter egg: tap the plane
+ var egg=document.getElementById('egg'),toast=document.getElementById('toast');
+ function pop(){toast.classList.add('on');setTimeout(function(){toast.classList.remove('on')},1800)}
+ egg.addEventListener('click',pop);
+ egg.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')pop()});
+})();
+</script>
+</body>
+</html>
